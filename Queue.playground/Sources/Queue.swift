@@ -58,3 +58,32 @@ public final class Queue<T> {
         return self.head?.key
     }
 }
+
+extension Queue: Sequence {
+    public typealias Iterator = QueueIterator<T>
+    
+    public func makeIterator() -> Queue<T>.Iterator {
+        return QueueIterator(self)
+    }
+}
+
+public struct QueueIterator<T>: IteratorProtocol {
+    
+    public typealias Element = T
+    
+    private let queue: Queue<T>
+    private var currentNode: Node<T>?
+    
+    init(_ queue: Queue<T>) {
+        self.queue = queue
+        self.currentNode = queue.head
+    }
+    
+    mutating public func next() -> QueueIterator<T>.Element? {
+        guard let node = self.currentNode else {return nil}
+        
+        let nextKey = node.key
+        self.currentNode = node.next
+        return nextKey
+    }
+}

@@ -8,5 +8,6 @@ print(queue.dequeue() ?? "n.a.")
 
 queue.enqueue(3)
 
-for item in queue {//Does not complie
+for item in queue {
+    print(item)
 }
